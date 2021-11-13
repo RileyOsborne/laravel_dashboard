@@ -15,7 +15,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return view('dashboard', ['companies' => Companies::all()]);
+        return view('company_dashboard', ['companies' => Companies::all()]);
     }
 
     /**

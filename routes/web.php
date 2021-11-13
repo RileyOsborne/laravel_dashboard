@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,14 @@ use App\Http\Controllers\CompanyController;
 |
 */
 
+Route::get('/', function () {
+    return redirect('dashboard');
+});
 
-Route::get('/', [CompanyController::class, 'index']);
+Route::get('/dashboard', function(){
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('/company_dashboard', [CompanyController::class, 'index'])->name('company_dashboard');
+
+Route::get('/employee_dashboard', [EmployeeController::class, 'index'])->name('employee_dashboard');

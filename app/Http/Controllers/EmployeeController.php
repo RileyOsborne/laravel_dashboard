@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employees;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -13,7 +15,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        return view('employee_dashboard', ['employees' => Employees::all()]);
     }
 
     /**
@@ -34,7 +36,16 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $employee = new Employees();
+        $employee->first_name = $request->first_name;
+        $employee->last_name = $request->last_name;
+        $employee->company_id = 1;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->updated_at = Carbon::now();
+        if ($employee->save()) {
+            return true;
+        }
     }
 
     /**
@@ -43,9 +54,9 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employees $employee)
     {
-        //
+        return $employee;
     }
 
     /**
@@ -66,9 +77,11 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Employees $employee)
     {
-        //
+        if($employee->fill($request->all())->save()){
+            return true;
+        }
     }
 
     /**
@@ -77,8 +90,10 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Employees $employee)
     {
-        //
+        if ($employee->delete()) {
+            return true;
+        }
     }
 }

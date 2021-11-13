@@ -19,7 +19,8 @@ class CompanySeeder extends Seeder
             'company_name' => 'Google LLC',
             'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png',
             'email' => 'press@google.com',
-            'website' => 'https://www.google.com/',
+            'address' => '1600 Amphitheatre Parkway, Mountain View, CA',
+            'website' => 'https://www.google.com',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
