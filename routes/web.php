@@ -25,4 +25,4 @@ Route::get('/dashboard', function(){
 
 Route::get('/company_dashboard', [CompanyController::class, 'index'])->name('company_dashboard');
 
-Route::get('/employee_dashboard', [EmployeeController::class, 'index'])->name('employee_dashboard');
+Route::resource('employee_dashboard', EmployeeController::class);

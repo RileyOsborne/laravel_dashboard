@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Employees;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -15,7 +17,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('employee_dashboard', ['employees' => Employees::all()]);
+        return View::make('employee_dashboard.index')
+        ->with('employees', Employees::all());
     }
 
     /**
@@ -25,7 +28,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('employee_dashboard.create');
     }
 
     /**
@@ -42,9 +45,12 @@ class EmployeeController extends Controller
         $employee->company_id = 1;
         $employee->email = $request->email;
         $employee->phone = $request->phone;
+        $employee->password = Hash::make($request->password);
+        $employee->created_at = Carbon::now();
         $employee->updated_at = Carbon::now();
         if ($employee->save()) {
-            return true;
+            return View::make('employee_dashboard.index')
+            ->with('employees', Employees::all());
         }
     }
 
@@ -65,9 +71,12 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($employee_id)
     {
-        //
+        $employee = Employees::find($employee_id);
+
+        return View::make('employee_dashboard.edit')
+        ->with('employee', $employee);
     }
 
     /**
@@ -77,10 +86,20 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employees $employee)
+    public function update(Request $request, $employee_id)
     {
-        if($employee->fill($request->all())->save()){
-            return true;
+        $employee = Employees::find($employee_id);        
+        $employee->first_name = $request->first_name;
+        $employee->last_name = $request->last_name;
+        $employee->company_id = 1;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->password = Hash::make($request->password);
+        $employee->created_at = Carbon::now();
+        $employee->updated_at = Carbon::now();
+        if ($employee->save()) {
+            return View::make('employee_dashboard.index')
+            ->with('employees', Employees::all());
         }
     }
 
@@ -90,10 +109,14 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employees $employee)
+    public function destroy($employee_id)
     {
+        $employee = Employees::find($employee_id);
+        $employee->delete();
+    
         if ($employee->delete()) {
-            return true;
+            return View::make('employee_dashboard.index')
+            ->with('employees', Employees::all());
         }
     }
 }
