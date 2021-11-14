@@ -6,7 +6,7 @@ use App\Models\Companies;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -23,7 +23,7 @@ class CompanyController extends Controller
     public function index()
     {
         return View::make('company_dashboard.index')
-        ->with('companies', Companies::all());
+        ->with('companies', DB::table('companies')->simplePaginate(10));
     }
 
     /**
@@ -56,7 +56,7 @@ class CompanyController extends Controller
         $company->updated_at = Carbon::now();
         if ($company->save()) {
             return View::make('company_dashboard.index')
-            ->with('companies', Companies::all());
+            ->with('companies', DB::table('companies')->simplePaginate(10));
         }
     }
 
@@ -105,7 +105,7 @@ class CompanyController extends Controller
         $company->updated_at = Carbon::now();
         if ($company->save()) {
             return View::make('company_dashboard.index')
-            ->with('companies', Companies::all());
+            ->with('companies', DB::table('companies')->simplePaginate(10));
         }
     }
 
@@ -121,6 +121,6 @@ class CompanyController extends Controller
         $company->delete();
     
         return View::make('company_dashboard.index')
-        ->with('companies', Companies::all());
+        ->with('companies', DB::table('companies')->simplePaginate(10));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employees;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,7 +19,7 @@ class EmployeeController extends Controller
     public function index()
     {
         return View::make('employee_dashboard.index')
-        ->with('employees', Employees::all());
+        ->with('companies', DB::table('companies')->simplePaginate(10));
     }
 
     /**
@@ -42,7 +43,7 @@ class EmployeeController extends Controller
         $employee = new Employees();
         $employee->first_name = $request->first_name;
         $employee->last_name = $request->last_name;
-        $employee->company_id = 1;
+        $employee->company_id = $request->company_id;
         $employee->email = $request->email;
         $employee->phone = $request->phone;
         $employee->password = Hash::make($request->password);
@@ -50,7 +51,7 @@ class EmployeeController extends Controller
         $employee->updated_at = Carbon::now();
         if ($employee->save()) {
             return View::make('employee_dashboard.index')
-            ->with('employees', Employees::all());
+            ->with('companies', DB::table('companies')->simplePaginate(10));
         }
     }
 
@@ -91,14 +92,14 @@ class EmployeeController extends Controller
         $employee = Employees::find($employee_id);        
         $employee->first_name = $request->first_name;
         $employee->last_name = $request->last_name;
-        $employee->company_id = 1;
+        $employee->company_id = $request->company_id;
         $employee->email = $request->email;
         $employee->phone = $request->phone;
         $employee->password = Hash::make($request->password);
         $employee->updated_at = Carbon::now();
         if ($employee->save()) {
             return View::make('employee_dashboard.index')
-            ->with('employees', Employees::all());
+            ->with('companies', DB::table('companies')->simplePaginate(10));
         }
     }
 
@@ -114,6 +115,6 @@ class EmployeeController extends Controller
         $employee->delete();
     
         return View::make('employee_dashboard.index')
-        ->with('employees', Employees::all());
+        ->with('companies', DB::table('companies')->simplePaginate(10));
     }
 }
