@@ -7,7 +7,7 @@
     <div>
     {{ HTML::ul($errors->all()) }}
 
-    {{ Form::open([url' => 'employee_dashboard']) }}
+    {{ Form::open(['url' => 'employee_dashboard']) }}
 
     <div class='flex-row-center'>
     <div class='form-group'>

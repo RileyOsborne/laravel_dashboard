@@ -95,7 +95,6 @@ class EmployeeController extends Controller
         $employee->email = $request->email;
         $employee->phone = $request->phone;
         $employee->password = Hash::make($request->password);
-        $employee->created_at = Carbon::now();
         $employee->updated_at = Carbon::now();
         if ($employee->save()) {
             return View::make('employee_dashboard.index')
@@ -114,9 +113,7 @@ class EmployeeController extends Controller
         $employee = Employees::find($employee_id);
         $employee->delete();
     
-        if ($employee->delete()) {
-            return View::make('employee_dashboard.index')
-            ->with('employees', Employees::all());
-        }
+        return View::make('employee_dashboard.index')
+        ->with('employees', Employees::all());
     }
 }

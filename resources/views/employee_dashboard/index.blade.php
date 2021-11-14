@@ -28,7 +28,7 @@
         <td>{{$employee->phone}}</td>
         <td class='flex-row-center'>
           <a href='{{route('employee_dashboard.edit', $employee->employee_id)}}' class='edit'>
-            <i class='fa fa-address-book'></i>Edit
+            <i class='fa fa-edit'></i>Edit
           </a>    
 
           <form action="{{ route('employee_dashboard.destroy', $employee->employee_id)}}" method="POST">

@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Companies;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+
 
 class CompanyController extends Controller
 {
@@ -15,7 +22,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return view('company_dashboard', ['companies' => Companies::all()]);
+        return View::make('company_dashboard.index')
+        ->with('companies', Companies::all());
     }
 
     /**
@@ -25,7 +33,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('company_dashboard.create');
     }
 
     /**
@@ -36,14 +44,19 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+
+        $logo = Storage::putFileAs('public', new File($request->file('logo')), Str::snake($request->company_name).'_logo.jpg');
+
         $company = new Companies();
         $company->company_name = $request->company_name;
-        $company->logo = $request->logo;
+        $company->logo = $logo;
         $company->email = $request->email;
+        $company->address = $request->address;
         $company->website = $request->website;
         $company->updated_at = Carbon::now();
         if ($company->save()) {
-            return true;
+            return View::make('company_dashboard.index')
+            ->with('companies', Companies::all());
         }
     }
 
@@ -64,9 +77,12 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($company_id)
     {
-        //
+        $company = Companies::find($company_id);
+
+        return View::make('company_dashboard.edit')
+        ->with('company', $company);
     }
 
     /**
@@ -76,10 +92,20 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Companies $company)
+    public function update(Request $request, $company_id)
     {
-        if($company->fill($request->all())->save()){
-            return true;
+        $logo = Storage::putFileAs('public', new File($request->file('logo')), Str::snake($request->company_name).'_logo.jpg');
+
+        $company = Companies::find($company_id);        
+        $company->company_name = $request->company_name;
+        $company->logo = $logo;
+        $company->email = $request->email;
+        $company->address = $request->address;
+        $company->website = $request->website;
+        $company->updated_at = Carbon::now();
+        if ($company->save()) {
+            return View::make('company_dashboard.index')
+            ->with('companies', Companies::all());
         }
     }
 
@@ -89,10 +115,12 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Companies $company)
+    public function destroy($company_id)
     {
-        if ($company->delete()) {
-            return true;
-        }
+        $company = Companies::find($company_id);
+        $company->delete();
+    
+        return View::make('company_dashboard.index')
+        ->with('companies', Companies::all());
     }
 }

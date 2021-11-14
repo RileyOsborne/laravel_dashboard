@@ -10,7 +10,7 @@
       </tr>
       <tr>
         <td>
-          <a href='{{ route('company_dashboard') }}' class='see-companies'><i class='fa fa-building'></i>See Companies</a>
+          <a href='{{ route('company_dashboard.index') }}' class='see-companies'><i class='fa fa-building'></i>See Companies</a>
         </td>
         <td>
           <a href='{{ route('employee_dashboard.index') }}' class='see-employees'><i class='fa fa-address-book'></i>See Employees</a>

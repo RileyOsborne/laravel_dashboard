@@ -71,7 +71,6 @@ body {
   font-size: 14px;
   margin: 5px;  
   cursor: pointer; 
-  text-decoration: none;
 }
 
 .edit {
@@ -83,7 +82,6 @@ body {
   font-size: 14px;
   margin: 5px; 
   cursor: pointer; 
-  text-decoration: none;
   appearance: button;
 }
 
@@ -96,7 +94,6 @@ body {
   font-size: 17px;
   cursor: pointer;
   border-radius: 2px;
-  text-decoration: none;
   -webkit-appearance: button;
      -moz-appearance: button;
           appearance: button;
@@ -111,7 +108,6 @@ body {
   font-size: 17px;
   cursor: pointer;
   border-radius: 2px;
-  text-decoration: none;
   -webkit-appearance: button;
      -moz-appearance: button;
           appearance: button;
@@ -131,7 +127,6 @@ body {
   font-size: 0.9em; 
   cursor: pointer; 
   margin-bottom: 10px;
-  text-decoration: none;
 }
 
 i {
@@ -144,7 +139,6 @@ i {
   padding: 10px 10px;
   text-align: center;
   cursor: pointer;
-  text-decoration: none;
   -webkit-appearance: button;
      -moz-appearance: button;
           appearance: button;
@@ -180,4 +174,12 @@ input[type=text], input[type=email], input[type=password] {
   justify-content: center; 
   align-items: center;
   padding: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
 }

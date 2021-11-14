@@ -23,6 +23,10 @@ Route::get('/dashboard', function(){
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/company_dashboard', [CompanyController::class, 'index'])->name('company_dashboard');
+Route::resource('company_dashboard', CompanyController::class)->parameters([
+    'company_dashboard' => 'company_id'
+]);
 
-Route::resource('employee_dashboard', EmployeeController::class);
+Route::resource('employee_dashboard', EmployeeController::class)->parameters([
+    'employee_dashboard' => 'employee_id'
+]);;
