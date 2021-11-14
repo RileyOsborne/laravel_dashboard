@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Employees;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -19,7 +17,7 @@ class EmployeeController extends Controller
     public function index()
     {
         return View::make('employee_dashboard.index')
-        ->with('companies', DB::table('companies')->simplePaginate(10));
+        ->with('employees', DB::table('employees')->simplePaginate(10));
     }
 
     /**
@@ -40,19 +38,22 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new Employees();
-        $employee->first_name = $request->first_name;
-        $employee->last_name = $request->last_name;
-        $employee->company_id = $request->company_id;
-        $employee->email = $request->email;
-        $employee->phone = $request->phone;
-        $employee->password = Hash::make($request->password);
-        $employee->created_at = Carbon::now();
-        $employee->updated_at = Carbon::now();
-        if ($employee->save()) {
-            return View::make('employee_dashboard.index')
-            ->with('companies', DB::table('companies')->simplePaginate(10));
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:20',
+            'last_name' => 'required|string|max:20',
+            'company_id' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric|digits:10',
+            'password' => 'required|min:6'
+        ]);
+
+        if($validated) {
+            Employees::create($request->all());
         }
+
+        return View::make('employee_dashboard.index')
+        ->with('employees', DB::table('employees')->simplePaginate(10));
+
     }
 
     /**
@@ -89,17 +90,27 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $employee_id)
     {
-        $employee = Employees::find($employee_id);        
-        $employee->first_name = $request->first_name;
-        $employee->last_name = $request->last_name;
-        $employee->company_id = $request->company_id;
-        $employee->email = $request->email;
-        $employee->phone = $request->phone;
-        $employee->password = Hash::make($request->password);
-        $employee->updated_at = Carbon::now();
-        if ($employee->save()) {
-            return View::make('employee_dashboard.index')
-            ->with('companies', DB::table('companies')->simplePaginate(10));
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:20',
+            'last_name' => 'required|string|max:20',
+            'company_id' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric|digits:10',
+            'password' => 'required|min:6'
+        ]);
+
+        if($validated) {
+            $employee = Employees::find($employee_id);
+            $employee->first_name = $request->first_name;
+            $employee->last_name = $request->last_name;
+            $employee->company_id = $request->company_id;
+            $employee->email = $request->email;
+            $employee->phone = $request->phone;
+            $employee->password = $request->password;
+            if ($employee->save()) {
+                return View::make('employee_dashboard.index')
+                ->with('employees', DB::table('employees')->simplePaginate(10));
+            }
         }
     }
 
@@ -115,6 +126,6 @@ class EmployeeController extends Controller
         $employee->delete();
     
         return View::make('employee_dashboard.index')
-        ->with('companies', DB::table('companies')->simplePaginate(10));
+        ->with('employees', DB::table('employees')->simplePaginate(10));
     }
 }

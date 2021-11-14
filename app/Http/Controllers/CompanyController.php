@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Companies;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\File;
@@ -45,18 +44,27 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
 
+        $validated = $request->validate([
+            'company_name' => 'required|string|max:100',
+            'logo' => 'required|image',
+            'email' => 'required|email',
+            'address' => 'required|string',
+            'website' => 'required|string',
+        ]);
+
         $logo = Storage::putFileAs('public', new File($request->file('logo')), Str::snake($request->company_name).'_logo.jpg');
 
-        $company = new Companies();
-        $company->company_name = $request->company_name;
-        $company->logo = $logo;
-        $company->email = $request->email;
-        $company->address = $request->address;
-        $company->website = $request->website;
-        $company->updated_at = Carbon::now();
-        if ($company->save()) {
-            return View::make('company_dashboard.index')
-            ->with('companies', DB::table('companies')->simplePaginate(10));
+        if($validated) {
+            $company = new Companies();
+            $company->company_name = $request->company_name;
+            $company->logo = $logo;
+            $company->email = $request->email;
+            $company->address = $request->address;
+            $company->website = $request->website;
+            if ($company->save()) {
+                return View::make('company_dashboard.index')
+                ->with('companies', DB::table('companies')->simplePaginate(10));
+            }
         }
     }
 
@@ -94,18 +102,27 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $company_id)
     {
+        $validated = $request->validate([
+            'company_name' => 'required|string|max:100',
+            'logo' => 'required|image',
+            'email' => 'required|email',
+            'address' => 'required|string',
+            'website' => 'required|string',
+        ]);
+
         $logo = Storage::putFileAs('public', new File($request->file('logo')), Str::snake($request->company_name).'_logo.jpg');
 
-        $company = Companies::find($company_id);        
-        $company->company_name = $request->company_name;
-        $company->logo = $logo;
-        $company->email = $request->email;
-        $company->address = $request->address;
-        $company->website = $request->website;
-        $company->updated_at = Carbon::now();
-        if ($company->save()) {
-            return View::make('company_dashboard.index')
-            ->with('companies', DB::table('companies')->simplePaginate(10));
+        if($validated) {
+            $company = Companies::find($company_id);
+            $company->company_name = $request->company_name;
+            $company->logo = $logo;
+            $company->email = $request->email;
+            $company->address = $request->address;
+            $company->website = $request->website;
+            if ($company->save()) {
+                return View::make('company_dashboard.index')
+                ->with('companies', DB::table('companies')->simplePaginate(10));
+            }
         }
     }
 
