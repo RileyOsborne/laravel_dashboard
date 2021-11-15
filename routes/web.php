@@ -16,18 +16,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Set landing page to login
 Route::get('/', function () {
     return view('auth.login');
 });
 
+// Middleware is handled in the controller
 Route::resource('company_dashboard', CompanyController::class)->parameters([
     'company_dashboard' => 'company_id'
 ]);
 
+// Middleware is handled in the controller
 Route::resource('employee_dashboard', EmployeeController::class)->parameters([
     'employee_dashboard' => 'employee_id'
 ]);
 
+//Only allow logged in employees to view the dashbord
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

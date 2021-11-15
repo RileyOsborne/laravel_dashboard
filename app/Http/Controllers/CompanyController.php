@@ -21,6 +21,7 @@ class CompanyController extends Controller
      */
     public function __construct()
     {
+        //Prevent regular employees from executing CRUD functionality
         $this->middleware('admin')->except('index');
     }
 
@@ -62,6 +63,7 @@ class CompanyController extends Controller
             'website' => 'required|string',
         ]);
 
+        //Store the logo and return the file path to be stored in the DB for future querying
         $logo = Storage::putFileAs('public', new File($request->file('logo')), Str::snake($request->company_name).'_logo.jpg');
 
         if($validated) {
@@ -120,6 +122,7 @@ class CompanyController extends Controller
             'website' => 'required|string',
         ]);
 
+        //Store the logo and return the file path to be stored in the DB for future querying
         $logo = Storage::putFileAs('public', new File($request->file('logo')), Str::snake($request->company_name).'_logo.jpg');
 
         if($validated) {

@@ -19,9 +19,7 @@ class AdminMiddleware
 
     protected function isAdmin($request)
     {
-        // Write your logic to check if the user us admin.
-
-        // something like
+        //logic to verify the logged in user is an admin
         return $request->user()->email == 'admin@admin.com';
     }
 }

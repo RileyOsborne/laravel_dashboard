@@ -19,6 +19,7 @@ class EmployeeController extends Controller
      */
     public function __construct()
     {
+        //Prevent regular employees from executing CRUD functionality
         $this->middleware('admin')->except('index');
     }
 
@@ -29,9 +30,6 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        // $employee = Employees::find(1);
-        // $company = $employee->companies->company_name;
-        // dd($company);
         return View::make('employee_dashboard.index')
         ->with('employees', Employees::paginate(10));
     }
@@ -63,6 +61,8 @@ class EmployeeController extends Controller
             'password' => 'required|min:6'
         ]);
 
+
+        //Retrieve the company that matches the name the employee entered to store the relevant company id
         $company = DB::table('companies')->where('company_name', $request->company_name)->first();
 
         if($validated) {
@@ -125,6 +125,7 @@ class EmployeeController extends Controller
             'password' => 'required|min:6'
         ]);
 
+        //Retrieve the company that matches the name the employee entered to store the relevant company id
         $company = DB::table('companies')->where('company_name', $request->company_name)->first();
 
         if($validated) {
