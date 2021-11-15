@@ -82,7 +82,9 @@ body {
   font-size: 14px;
   margin: 5px; 
   cursor: pointer; 
-  appearance: button;
+  -webkit-appearance: button; 
+     -moz-appearance: button; 
+          appearance: button;
 }
 
 .see-companies {

@@ -2,7 +2,7 @@
   <x-slot name='content'>
     <div class='header-div'>
       <a href='{{route('dashboard')}}' class='home'><i class='fa fa-home'></i></a>
-      <h1>Create New Employee</h1>
+      <h1 class='text-4xl'>Create New Employee</h1>
     </div>
     <div>
     {{ HTML::ul($errors->all()) }}
@@ -23,8 +23,8 @@
 
     <div class='flex-row-center'>
     <div class='form-group'>
-        {{ Form::label('company_id', 'Company') }}
-        {{ Form::text('company_id', old('company_id')) }}
+        {{ Form::label('company_name', 'Company Name') }}
+        {{ Form::text('company_name', old('company_name')) }}
     </div>
 
     <div class='form-group'>

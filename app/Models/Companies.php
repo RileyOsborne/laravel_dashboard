@@ -13,4 +13,5 @@ class Companies extends Model
      * @var string
      */
     protected $primaryKey = 'company_id';
+
 }

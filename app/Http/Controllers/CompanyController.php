@@ -10,10 +10,20 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-
-
 class CompanyController extends Controller
 {
+
+    /**
+     * Instantiate a new controller instance 
+     * and only allow admin to perform CRUD actions
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin')->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +32,7 @@ class CompanyController extends Controller
     public function index()
     {
         return View::make('company_dashboard.index')
-        ->with('companies', DB::table('companies')->simplePaginate(10));
+        ->with('companies', Companies::paginate(10));
     }
 
     /**
@@ -63,7 +73,7 @@ class CompanyController extends Controller
             $company->website = $request->website;
             if ($company->save()) {
                 return View::make('company_dashboard.index')
-                ->with('companies', DB::table('companies')->simplePaginate(10));
+                ->with('companies', Companies::paginate(10));
             }
         }
     }
@@ -121,7 +131,7 @@ class CompanyController extends Controller
             $company->website = $request->website;
             if ($company->save()) {
                 return View::make('company_dashboard.index')
-                ->with('companies', DB::table('companies')->simplePaginate(10));
+                ->with('companies', Companies::paginate(10));
             }
         }
     }
@@ -138,6 +148,6 @@ class CompanyController extends Controller
         $company->delete();
     
         return View::make('company_dashboard.index')
-        ->with('companies', DB::table('companies')->simplePaginate(10));
+        ->with('companies', Companies::paginate(10));
     }
 }

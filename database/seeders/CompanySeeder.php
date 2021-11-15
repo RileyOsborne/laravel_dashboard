@@ -17,7 +17,7 @@ class CompanySeeder extends Seeder
     {
         DB::table('companies')->insert([
             'company_name' => 'Google LLC',
-            'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png',
+            'logo' => '',
             'email' => 'press@google.com',
             'address' => '1600 Amphitheatre Parkway, Mountain View, CA',
             'website' => 'https://www.google.com',

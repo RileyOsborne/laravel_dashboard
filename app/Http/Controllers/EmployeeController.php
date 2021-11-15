@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Companies;
 use App\Models\Employees;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,6 +10,18 @@ use Illuminate\Support\Facades\View;
 
 class EmployeeController extends Controller
 {
+
+    /**
+     * Instantiate a new controller instance 
+     * and only allow admin to perform CRUD actions
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin')->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +29,11 @@ class EmployeeController extends Controller
      */
     public function index()
     {
+        // $employee = Employees::find(1);
+        // $company = $employee->companies->company_name;
+        // dd($company);
         return View::make('employee_dashboard.index')
-        ->with('employees', DB::table('employees')->simplePaginate(10));
+        ->with('employees', Employees::paginate(10));
     }
 
     /**
@@ -41,18 +57,27 @@ class EmployeeController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string|max:20',
             'last_name' => 'required|string|max:20',
-            'company_id' => 'required',
+            'company_name' => 'required|string|max:100',
             'email' => 'required|email',
             'phone' => 'required|numeric|digits:10',
             'password' => 'required|min:6'
         ]);
 
-        if($validated) {
-            Employees::create($request->all());
-        }
+        $company = DB::table('companies')->where('company_name', $request->company_name)->first();
 
-        return View::make('employee_dashboard.index')
-        ->with('employees', DB::table('employees')->simplePaginate(10));
+        if($validated) {
+            $employee = new Employees();
+            $employee->first_name = $request->first_name;
+            $employee->last_name = $request->last_name;
+            $employee->company_id = $company->company_id;
+            $employee->email = $request->email;
+            $employee->phone = $request->phone;
+            $employee->password = $request->password;
+            if ($employee->save()) {
+                return View::make('employee_dashboard.index')
+                ->with('employees', Employees::paginate(10));
+            }
+        }
 
     }
 
@@ -90,26 +115,29 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $employee_id)
     {
+
         $validated = $request->validate([
             'first_name' => 'required|string|max:20',
             'last_name' => 'required|string|max:20',
-            'company_id' => 'required',
+            'company_name' => 'required|string|max:20',
             'email' => 'required|email',
             'phone' => 'required|numeric|digits:10',
             'password' => 'required|min:6'
         ]);
 
+        $company = DB::table('companies')->where('company_name', $request->company_name)->first();
+
         if($validated) {
             $employee = Employees::find($employee_id);
             $employee->first_name = $request->first_name;
             $employee->last_name = $request->last_name;
-            $employee->company_id = $request->company_id;
+            $employee->company_id = $company->company_id;
             $employee->email = $request->email;
             $employee->phone = $request->phone;
             $employee->password = $request->password;
             if ($employee->save()) {
                 return View::make('employee_dashboard.index')
-                ->with('employees', DB::table('employees')->simplePaginate(10));
+                ->with('employees', Employees::paginate(10));
             }
         }
     }
@@ -126,6 +154,6 @@ class EmployeeController extends Controller
         $employee->delete();
     
         return View::make('employee_dashboard.index')
-        ->with('employees', DB::table('employees')->simplePaginate(10));
+        ->with('employees', Employees::paginate(10));
     }
 }

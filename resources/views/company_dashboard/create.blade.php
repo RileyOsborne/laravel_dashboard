@@ -2,7 +2,7 @@
   <x-slot name='content'>
     <div class='header-div'>
       <a href='{{route('dashboard')}}' class='home'><i class='fa fa-home'></i></a>
-      <h1>Create New Company</h1>
+      <h1 class='text-4xl'>Create New Company</h1>
     </div>
     <div>
     {{ HTML::ul($errors->all()) }}

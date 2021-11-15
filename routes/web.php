@@ -1,8 +1,9 @@
 <?php
+require __DIR__.'/auth.php';
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployeeController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,8 @@ use App\Http\Controllers\EmployeeController;
 */
 
 Route::get('/', function () {
-    return redirect('dashboard');
+    return view('auth.login');
 });
-
-Route::get('/dashboard', function(){
-    return view('dashboard');
-})->name('dashboard');
 
 Route::resource('company_dashboard', CompanyController::class)->parameters([
     'company_dashboard' => 'company_id'
@@ -29,4 +26,8 @@ Route::resource('company_dashboard', CompanyController::class)->parameters([
 
 Route::resource('employee_dashboard', EmployeeController::class)->parameters([
     'employee_dashboard' => 'employee_id'
-]);;
+]);
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');

@@ -1,8 +1,15 @@
 <x-template>
   <x-slot name='content'>
     <div class='header-div'>
-      <a href='{{route('dashboard')}}' class='home'><i class='fa fa-home'></i></a>
-      <h1>Companies</h1>
+    <div style='display: flex; justify-content: space-between;'>
+      <a href='{{route('dashboard')}}' class='home' style='margin: 5px;'><i class='fa fa-home'></i></a>
+      <form action="{{ route('logout')}}" method="POST">
+            @csrf
+            @method("POST")
+            <button style='margin: 20px; align-self: flex-end; justify-content: flex-end;'><i class="fa fa-sign-out fa-fw"></i> Logout</button>
+        </form>
+      </div>
+      <h1 class='text-4xl'>Companies</h1>
     </div>
     <div class='create-new-div'>
       <a href='{{route('company_dashboard.create')}}' class='create-new'><i class='fa fa-address-book'></i>Create New Company</a>
@@ -47,5 +54,8 @@
       </tbody>
       @endforeach
     </table>
+    <div style='margin-bottom: 10%;'>
+      {{ $companies->links() }}
+    </div>
   </x-slot>
 </x-template>
