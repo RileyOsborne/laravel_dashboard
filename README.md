@@ -1,4 +1,4 @@
-# laravel_dashboard
+# Laravel Dashboard
 
 ## Instructions For Setting Up With Laravel Sail in a Docker Container on WSL2
 
