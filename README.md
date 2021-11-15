@@ -1,6 +1,6 @@
 # Laravel Dashboard
 
-## Instructions For Setting Up With Laravel Sail in a Docker Container on WSL2
+## Instructions for setting up With Laravel Sail in a Docker Container on WSL2
 
 1. Clone repo
 2. Run `npm install`
@@ -31,3 +31,17 @@ Creating a user will also require all fields. Note again that company must match
 After you have finished exploring the application you can make an employee with any email and password and login to the application with them
 
 The regular employee is not authorized to perform CRUD functionality so therefore will receive a 401 unauthorized page if navigating to a create, update, or delete resource
+
+## Tech Talk
+
+The application leverages Laravel Breeze to handle authentication
+
+The routes for companies and employees are handled in a resourceful manner and only admins are authorized for CRUD functionality
+
+The application is largely standard Laravel utilizing Routes, Controllers, Migrations, etc.
+
+The styling was done with custom CSS prior to incorporating Laravel Breeze as a personal challenge/demonstration
+
+Laravel Breeze pulls in Tailwind, but the custom views make little use of it. Outside of using the recommended Tailwind classes for headers due to how Tailwind overrides their style there is no other use of Tailwind
+
+The application may update to use Tailwind styling for a future version
