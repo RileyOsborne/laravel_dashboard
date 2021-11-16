@@ -10,7 +10,8 @@ class AdminMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if (!$this->isAdmin($request)) {
+        if (! $this->isAdmin($request)) 
+        {
             abort(Response::HTTP_UNAUTHORIZED);
         }
 

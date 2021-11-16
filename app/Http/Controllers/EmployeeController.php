@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Companies;
 use App\Models\Employees;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -67,7 +66,8 @@ class EmployeeController extends Controller
                     ->where('company_name', $request->company_name)
                     ->first();
 
-        if ($validated) {
+        if ($validated) 
+        {
             $employee = new Employees();
             $employee->first_name = $request->first_name;
             $employee->last_name = $request->last_name;
@@ -132,7 +132,8 @@ class EmployeeController extends Controller
                     ->where('company_name', $request->company_name)
                     ->first();
 
-        if ($validated) {
+        if ($validated) 
+        {
             $employee = Employees::find($employee_id);
             $employee->first_name = $request->first_name;
             $employee->last_name = $request->last_name;
@@ -140,9 +141,10 @@ class EmployeeController extends Controller
             $employee->email = $request->email;
             $employee->phone = $request->phone;
             $employee->password = $request->password;
-            if ($employee->save()) {
+            if ($employee->save()) 
+            {
                 return View::make('employee_dashboard.index')
-                ->with('employees', Employees::paginate(10));
+                        ->with('employees', Employees::paginate(10));
             }
         }
     }
