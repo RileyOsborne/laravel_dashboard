@@ -9,7 +9,7 @@
 5. Run `sail up -d` to start the app. If you do not have a sail alias `.vendor/bin/sail` will be required
 6. Create `SQLite` Database by running `touch database/database.sqlite`
 7. Populate the DB by running `sail artisan migrate:fresh --seed`
-8. Navigate via your web browser to `localhost` or use the link via your container in docker
+8. Navigate via your web browser to `localhost` or use the link via your container in Docker
 9. Login with the email `admin@admin.com` and password `password`
 
 ## Using the application as admin
