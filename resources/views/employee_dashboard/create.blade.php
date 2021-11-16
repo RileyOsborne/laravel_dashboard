@@ -1,10 +1,13 @@
 <x-template>
   <x-slot name='content'>
+    
     <div class='header-div'>
       <a href='{{route('dashboard')}}' class='home'><i class='fa fa-home'></i></a>
       <h1 class='text-4xl'>Create New Employee</h1>
     </div>
+
     <div>
+
     {{ HTML::ul($errors->all()) }}
 
     {{ Form::open(['url' => 'employee_dashboard']) }}
@@ -50,6 +53,8 @@
     </div>
 
     {{ Form::close() }}
+
   </div>
+
   </x-slot>
 </x-template>

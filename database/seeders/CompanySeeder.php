@@ -22,7 +22,7 @@ class CompanySeeder extends Seeder
             'address' => '1600 Amphitheatre Parkway, Mountain View, CA',
             'website' => 'https://www.google.com',
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

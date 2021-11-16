@@ -31,7 +31,7 @@ class EmployeeController extends Controller
     public function index()
     {
         return View::make('employee_dashboard.index')
-        ->with('employees', Employees::paginate(10));
+                ->with('employees', Employees::paginate(10));
     }
 
     /**
@@ -63,9 +63,11 @@ class EmployeeController extends Controller
 
 
         //Retrieve the company that matches the name the employee entered to store the relevant company id
-        $company = DB::table('companies')->where('company_name', $request->company_name)->first();
+        $company = DB::table('companies')
+                    ->where('company_name', $request->company_name)
+                    ->first();
 
-        if($validated) {
+        if ($validated) {
             $employee = new Employees();
             $employee->first_name = $request->first_name;
             $employee->last_name = $request->last_name;
@@ -75,7 +77,7 @@ class EmployeeController extends Controller
             $employee->password = $request->password;
             if ($employee->save()) {
                 return View::make('employee_dashboard.index')
-                ->with('employees', Employees::paginate(10));
+                        ->with('employees', Employees::paginate(10));
             }
         }
 
@@ -103,7 +105,7 @@ class EmployeeController extends Controller
         $employee = Employees::find($employee_id);
 
         return View::make('employee_dashboard.edit')
-        ->with('employee', $employee);
+                ->with('employee', $employee);
     }
 
     /**
@@ -126,9 +128,11 @@ class EmployeeController extends Controller
         ]);
 
         //Retrieve the company that matches the name the employee entered to store the relevant company id
-        $company = DB::table('companies')->where('company_name', $request->company_name)->first();
+        $company = DB::table('companies')
+                    ->where('company_name', $request->company_name)
+                    ->first();
 
-        if($validated) {
+        if ($validated) {
             $employee = Employees::find($employee_id);
             $employee->first_name = $request->first_name;
             $employee->last_name = $request->last_name;
@@ -155,6 +159,6 @@ class EmployeeController extends Controller
         $employee->delete();
     
         return View::make('employee_dashboard.index')
-        ->with('employees', Employees::paginate(10));
+                ->with('employees', Employees::paginate(10));
     }
 }

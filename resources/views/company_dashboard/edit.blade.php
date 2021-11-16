@@ -1,10 +1,13 @@
 <x-template>
   <x-slot name='content'>
+
     <div class='header-div'>
       <a href='{{route('dashboard')}}' class='home'><i class='fa fa-home'></i></a>
       <h1 class='text-4xl'>Editing: {{$company->company_name}}</h1>
     </div>
+
     <div>
+
     {{ HTML::ul($errors->all()) }}
 
     {{ Form::model($company, ['route' => ['company_dashboard.update', $company->company_id], 'method' => 'PUT', 'files' => 'true']) }}
@@ -46,6 +49,8 @@
     </div>
 
     {{ Form::close() }}
+
   </div>
+  
   </x-slot>
 </x-template>

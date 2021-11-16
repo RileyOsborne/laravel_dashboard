@@ -33,7 +33,7 @@ class CompanyController extends Controller
     public function index()
     {
         return View::make('company_dashboard.index')
-        ->with('companies', Companies::paginate(10));
+                ->with('companies', Companies::paginate(10));
     }
 
     /**
@@ -66,7 +66,7 @@ class CompanyController extends Controller
         //Store the logo and return the file path to be stored in the DB for future querying
         $logo = Storage::putFileAs('public', new File($request->file('logo')), Str::snake($request->company_name).'_logo.jpg');
 
-        if($validated) {
+        if ($validated) {
             $company = new Companies();
             $company->company_name = $request->company_name;
             $company->logo = $logo;
@@ -75,7 +75,7 @@ class CompanyController extends Controller
             $company->website = $request->website;
             if ($company->save()) {
                 return View::make('company_dashboard.index')
-                ->with('companies', Companies::paginate(10));
+                        ->with('companies', Companies::paginate(10));
             }
         }
     }
@@ -102,7 +102,7 @@ class CompanyController extends Controller
         $company = Companies::find($company_id);
 
         return View::make('company_dashboard.edit')
-        ->with('company', $company);
+                ->with('company', $company);
     }
 
     /**
@@ -125,7 +125,7 @@ class CompanyController extends Controller
         //Store the logo and return the file path to be stored in the DB for future querying
         $logo = Storage::putFileAs('public', new File($request->file('logo')), Str::snake($request->company_name).'_logo.jpg');
 
-        if($validated) {
+        if ($validated) {
             $company = Companies::find($company_id);
             $company->company_name = $request->company_name;
             $company->logo = $logo;
@@ -134,7 +134,7 @@ class CompanyController extends Controller
             $company->website = $request->website;
             if ($company->save()) {
                 return View::make('company_dashboard.index')
-                ->with('companies', Companies::paginate(10));
+                        ->with('companies', Companies::paginate(10));
             }
         }
     }
@@ -151,6 +151,6 @@ class CompanyController extends Controller
         $company->delete();
     
         return View::make('company_dashboard.index')
-        ->with('companies', Companies::paginate(10));
+                ->with('companies', Companies::paginate(10));
     }
 }

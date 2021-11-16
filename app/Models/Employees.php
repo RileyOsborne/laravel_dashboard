@@ -39,7 +39,8 @@ class Employees extends Authenticatable
 
     protected $guarded = [];
     
-    public function setPasswordAttribute($value){
+    public function setPasswordAttribute($value) 
+    {
         $this->attributes['password'] = Hash::make($value);
     }
 

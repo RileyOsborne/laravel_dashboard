@@ -24,7 +24,7 @@ class EmployeeSeeder extends Seeder
             'password' => Hash::make('password'),
             'phone' => '555-555-5555',
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

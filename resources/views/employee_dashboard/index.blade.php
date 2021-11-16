@@ -1,5 +1,6 @@
 <x-template>
   <x-slot name='content'>
+
     <div class='header-div'>
     <div style='display: flex; justify-content: space-between;'>
       <a href='{{route('dashboard')}}' class='home' style='margin: 5px;'><i class='fa fa-home'></i></a>
@@ -11,9 +12,15 @@
       </div>
       <h1 class='text-4xl'>Employees</h1>
     </div>
+
     <div class='create-new-div'>
       <a href='{{route('employee_dashboard.create')}}' class='create-new'><i class='fa fa-address-book'></i>Create New Employee</a>
     </div>
+
+    <div>
+      {{ $employees->links() }}
+    </div>
+
     <table class='styled-table'>
       <thead>
       <tr>
@@ -51,5 +58,10 @@
       </tbody>
       @endforeach
     </table>
+
+    <div style='margin-bottom: 10%;'>
+      {{ $employees->links() }}
+    </div>
+
   </x-slot>
 </x-template>
