@@ -14,7 +14,7 @@
 
 ## Using the application as admin
 
-Upon logging in you will land on a page which you can use to naviagte to either a company list or employee list
+Upon logging in you will land on a page which you can use to navigate to either a company list or employee list
 
 The admin user is capable of CRUD functionality on these views (namely create, update, delete)
 
